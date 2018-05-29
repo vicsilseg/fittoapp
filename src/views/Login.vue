@@ -37,8 +37,11 @@
           <div v-if="isLogin||isSignIn" class="button active">
             <div class ="button__item" @click="SignIn">Inicia Sesión</div>
           </div>
-          <div v-if="isLogin||isSignUp" class="button inactive">
-            <div class ="button__item" @click="SignUp">¿No Tienes Cuenta? <strong>Regístrate</strong></div>
+          <div v-if="isLogin||!isSignIn" class="button"
+          :class="{ 
+            inactive: isLogin,
+            active: !isLogin }">
+            <div class="button__item" @click="SignUp"><span v-if="isLogin">¿No Tienes Cuenta?</span><strong>Regístrate</strong></div>
           </div>
         </div>
       </section>
@@ -60,7 +63,7 @@ export default {
       isLogin: true,
       isSignIn: false,
       isSignUp: false,
-      maxLength:0,
+      maxLength: 0,
       formatCode: null,
 
       LoginForm: {
@@ -79,21 +82,20 @@ export default {
       console.log(this.formatCode.length);
       this.formatCode = String(this.formatCode);
       var char = [];
-        if (this.formatCode.length == 0 && this.maxLength==2){
-          return this.maxLength = false;
-        }
-        if (this.formatCode.length == 4 && this.maxLength==0) {
-          char[0] = this.formatCode.substring(0, 4);
-          this.formatCode += '-';
-          this.maxLength=1;
-        }
-        if (this.formatCode.length == 9 && this.maxLength==1) {
-          char[1] = this.formatCode.substring(6, 9);
-          this.formatCode += '-';
-          this.maxLength=2;
-        }
-      },
-    
+      if (this.formatCode.length == 0 && this.maxLength == 2) {
+        return (this.maxLength = false);
+      }
+      if (this.formatCode.length == 4 && this.maxLength == 0) {
+        char[0] = this.formatCode.substring(0, 4);
+        this.formatCode += "-";
+        this.maxLength = 1;
+      }
+      if (this.formatCode.length == 9 && this.maxLength == 1) {
+        char[1] = this.formatCode.substring(6, 9);
+        this.formatCode += "-";
+        this.maxLength = 2;
+      }
+    },
 
     closeLogin() {
       if (this.isSignIn) {
@@ -124,7 +126,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style src="../styles/main.css" scoped></style>

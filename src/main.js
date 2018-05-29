@@ -4,7 +4,7 @@ import App from "./App.vue";
 import VueRouter from "vue-router";
 import { routes } from "./routes/routes";
 import { TweenMax, TimelineMax, MorphSVGPlugin } from "gsap";
-
+import {store} from "./store/store"
 /* CSS */
 
 import "./styles/reset.css";
@@ -20,6 +20,7 @@ const router = new VueRouter({
 
 new Vue({
   el: "#app",
+  store,
   router,
   render: h => h(App)
 });
